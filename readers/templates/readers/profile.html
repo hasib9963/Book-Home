@@ -1,0 +1,65 @@
+{% extends 'base.html' %} {% load static %} {% block head_title %}User Profile{% endblock %} {% block content %} {% if form.non_field_errors %} {% for error in form.non_field_errors %}
+<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-2" role="alert">
+    <p class="font-bold">Error!</p>
+    <p class="block sm:inline">{{ error }}</p>
+</div>
+{% endfor %} {% endif %} {% if form.non_field_errors %} {% for error in form.non_field_errors %}
+<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-2" role="alert">
+    <p class="font-bold">Error!</p>
+    <p class="block sm:inline">{{ error }}</p>
+</div>
+{% endfor %} {% endif %}
+<div class="bg-white px-3 py-4 rounded-xl my-6">
+
+    <h4 class="font-bold text-3xl text-left pb-5">Account NO: {{request.user.account.account_no}}</h4>
+    <h4 class="font-bold text-3xl text-left pb-5">Hello: {{request.user.account.user}}</h4>
+    <div class="flex items-center justify-between">
+        <button class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+            <a class="btn btn-warning btn-sm mb-3" href="{% url 'update' %}">Update Profile Information</a><br>
+        </button>
+    </div>
+    <div class="relative overflow-x-auto">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        ID
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Book Name
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Book Price
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Borrowed Date and time
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Return book
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for borrow in borrowed_books %}
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row" class="px-6 py-4 text-xs text-gray-700  bg-gray-50 dark:bg-gray-700 dark:text-gray-400 font-bold">
+                            {{ borrow.id }}
+                        </th>
+                        <td class="px-6 py-4 text-xs text-gray-700  bg-gray-50 dark:bg-gray-700 dark:text-gray-400 font-bold">
+                            {{ borrow.book.book_title }}
+                        </td>
+                        <td class="px-6 py-4 text-xs text-gray-700  bg-gray-50 dark:bg-gray-700 dark:text-gray-400 font-bold">
+                            {{ borrow.book.price }}
+                        </td>
+                        <td class="px-6 py-4text-xs text-gray-700  bg-gray-50 dark:bg-gray-700 dark:text-gray-400 font-bold">
+                            {{ borrow.borrow_date }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <a href="{% url 'return_book' borrow.id %}" class="bg-blue-600 hover:bg-yellow-400 py-1 px-2 rounded-lg text-white font-bold">Return Now</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div> 
+{% endblock %}

@@ -1,0 +1,8 @@
+DEPOSIT = 1
+RETURN_BOOK = 2
+
+
+TRANSACTION_TYPE = (
+    (DEPOSIT, 'Deposite'),
+    (RETURN_BOOK, 'RETURN_BOOK'),  
+)

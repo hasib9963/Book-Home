@@ -9,10 +9,11 @@ from django.views.generic import FormView
 from .forms import UserRegistrationForm,UserUpdateForm
 from django.contrib.auth import login, logout
 from django.urls import reverse_lazy
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView
 from django.views import View
 from django.shortcuts import redirect
 from transactions.models import Borrow
+from django.contrib.auth import logout
 
 class UserRegistrationView(FormView):
     template_name = 'readers/user_registration.html'
@@ -32,11 +33,14 @@ class UserLoginView(LoginView):
     def get_success_url(self):
         return reverse_lazy('home')
 
-class UserLogoutView(LogoutView):
-    def get_success_url(self):
-        if self.request.user.is_authenticated:
-            logout(self.request)
-        return reverse_lazy('home')
+
+
+
+def user_logout_view(request):
+    if request.user.is_authenticated:
+        logout(request)
+    return redirect(reverse_lazy('home'))
+
     
 class UserProfileView(View):
     # template_name = 'readers/profile.html'
